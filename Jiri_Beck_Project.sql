@@ -1,3 +1,4 @@
+-- Creation of the primary table --
 
 SELECT *
 FROM czechia_payroll cp 
@@ -104,7 +105,7 @@ SELECT *
 FROM t_Jiri_Beck_project_SQL_primary_final; 
 
 
--- 1 ukol -- 
+-- 1 question -- 
 
 -- 1st type of calculation-- 
 
@@ -113,8 +114,9 @@ SELECT 	jbp.industry_branch_name AS branch,
 		jbp.payroll_year AS year,
 		AVG(jbp.value) AS average_salary
 FROM t_jiri_beck_project_sql_primary_final jbp 
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL
-GROUP BY jbp.industry_branch_name, jbp.payroll_year;
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.calculation_code = 200
+GROUP BY jbp.industry_branch_name, jbp.payroll_year
+ORDER BY jbp.industry_branch_name, jbp.payroll_year;
 
 -- 2nd type of calculation --
 
@@ -129,18 +131,18 @@ FROM
 (SELECT	jbp.industry_branch_name AS branch,
 		AVG(jbp.value) AS average_salary_2006
 FROM t_jiri_beck_project_sql_primary_final jbp 
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2006
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2006 AND jbp.calculation_code = 200
 GROUP BY jbp.industry_branch_name)year1
 JOIN
 (SELECT	jbp.industry_branch_name AS branch,
 		AVG(jbp.value) AS average_salary_2018
 FROM t_jiri_beck_project_sql_primary_final jbp 
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2018
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2018 AND jbp.calculation_code = 200
 GROUP BY jbp.industry_branch_name)year2 
 	ON year1.branch = year2.branch;
 
 
--- 2 ukol --
+-- 2 question --
 
 SELECT 	year2006.food_category,
 		year2006.average_price_2006,
@@ -174,17 +176,17 @@ LEFT JOIN
 (SELECT jbp.payroll_year AS year,
 		round(AVG(jbp.value),2) AS average_salary_2006
 FROM t_jiri_beck_project_sql_primary_final jbp
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2006)year2006s
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2006 AND jbp.calculation_code = 200)year2006s
 	ON year2006.year=year2006s.year
 LEFT JOIN
 (SELECT jbp.payroll_year AS year,
 		round(AVG(jbp.value),2) AS average_salary_2018
 FROM t_jiri_beck_project_sql_primary_final jbp
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2018)year2018s
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.payroll_year = 2018 AND jbp.calculation_code = 200)year2018s
 	ON year2018.year=year2018s.YEAR;
 
 
--- 3 ukol --
+-- 3 question --
 
 SELECT 	cyear.food_category,
 		cyear.current_year AS year,
@@ -246,7 +248,7 @@ ORDER BY average_price_growth_percent;
 SELECT 	start_year.food_category,
 		start_year.average_price_2006,
 		end_year.average_price_2018,
-		(end_year.average_price_2018-start_year.average_price_2006)/start_year.average_price_2006 AS price_growth,
+		ROUND((end_year.average_price_2018-start_year.average_price_2006)/start_year.average_price_2006,2) AS price_growth,
   		start_year.price_value,
   		start_year.price_unit
 FROM
@@ -269,7 +271,7 @@ GROUP BY jbp.name) end_year
 ORDER BY price_growth;
 
 
--- 4 ukol --
+-- 4 question --
 
 CREATE OR REPLACE VIEW v_average_salary_growth AS
 SELECT  salary_year1.year AS year, 
@@ -281,13 +283,13 @@ FROM
 (SELECT jbp.payroll_year AS year,
 		round(AVG(jbp.value),2) AS average_salary
 FROM t_jiri_beck_project_sql_primary_final jbp 
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.calculation_code = 200
 GROUP BY jbp.payroll_year)salary_year1
 JOIN 
 (SELECT jbp.payroll_year AS year,
 		round(AVG(jbp.value),2) AS average_salary
 FROM t_jiri_beck_project_sql_primary_final jbp 
-WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL
+WHERE jbp.value_type_code = 5958 AND jbp.industry_branch_name IS NOT NULL AND jbp.calculation_code = 200
 GROUP BY jbp.payroll_year)salary_year2
 	ON salary_year1.year = salary_year2.year + 1
 GROUP BY salary_year1.year;
@@ -335,14 +337,17 @@ v_average_price_growth vap
 	ON vas.year = vap.YEAR;
 	
 	
--- 5 ukol --
-CREATE TABLE t_jiri_beck_project_SQL_secondary_final
+-- 5 question --
+CREATE OR REPLACE TABLE t_jiri_beck_project_SQL_secondary_final
 SELECT 	c.country,
 		e.`year`, 
-		e.GDP 
+		e.GDP,
+		e.gini,
+		e.population
 FROM countries c 
 JOIN economies e 
-	ON c.country = e.country;
+	ON c.country = e.country
+WHERE c.continent = 'Europe' AND e.year BETWEEN 2006 AND 2018;
 	
 SELECT *
 FROM t_jiri_beck_project_SQL_secondary_final;
