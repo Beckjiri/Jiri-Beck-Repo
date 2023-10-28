@@ -1,7 +1,7 @@
-#### Jiri-Beck-Repo
+# Jiri-Beck-Repo
 Repository for Engeto Academy projects
 
-### Zadání projektu
+# Zadání projektu
 
 Na vašem analytickém oddělení nezávislé společnosti, která se zabývá životní úrovní občanů, jste se dohodli, že se pokusíte odpovědět na pár definovaných výzkumných otázek, které adresují dostupnost základních potravin široké veřejnosti. Kolegové již vydefinovali základní otázky, na které se pokusí odpovědět a poskytnout tuto informaci tiskovému oddělení. Toto oddělení bude výsledky prezentovat na následující konferenci zaměřené na tuto oblast.
 
@@ -9,7 +9,7 @@ Potřebují k tomu od vás připravit robustní datové podklady, ve kterých bu
 
 Jako dodatečný materiál připravte i tabulku s HDP, GINI koeficientem a populací dalších evropských států ve stejném období, jako primární přehled pro ČR.
 
-# Výzkumné otázky
+### Výzkumné otázky
 
 1) Rostou v průběhu let mzdy ve všech odvětvích, nebo v některých klesají?
 2) Kolik je možné si koupit litrů mléka a kilogramů chleba za první a poslední srovnatelné období v dostupných datech cen a mezd?
@@ -17,7 +17,7 @@ Jako dodatečný materiál připravte i tabulku s HDP, GINI koeficientem a popul
 4) Existuje rok, ve kterém byl meziroční nárůst cen potravin výrazně vyšší než růst mezd (větší než 10 %)?
 5) Má výška HDP vliv na změny ve mzdách a cenách potravin? Neboli, pokud HDP vzroste výrazněji v jednom roce, projeví se to na cenách potravin či mzdách ve stejném nebo násdujícím roce výraznějším růstem?
 
-### Vypracování projektu
+# Vypracování projektu
 
 ## Vyhotovení primární a sekundární tabulky
 
