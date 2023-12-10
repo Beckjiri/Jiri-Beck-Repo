@@ -54,14 +54,15 @@ FROM v_average_price_growth;
 
 
 
-SELECT 	vas.year,
-		vas.salary_growth,
-		vap.price_growth,
-		vap.price_growth-vas.salary_growth AS difference,
-		CASE
-			WHEN vap.price_growth-vas.salary_growth > 10 THEN 1
-			ELSE 0
-		END	AS diffence_higher_10_percent
+SELECT	
+	vas.year,
+	vas.salary_growth,
+	vap.price_growth,
+	vap.price_growth-vas.salary_growth AS difference,
+	CASE
+		WHEN vap.price_growth-vas.salary_growth > 10 THEN 1
+		ELSE 0
+	END	AS diffence_higher_10_percent
 FROM v_average_salary_growth vas
 JOIN
 v_average_price_growth vap

@@ -5,9 +5,9 @@ WITH average_price_every_year AS(
 		round(avg(cz_price_value),2) AS average_price,
 		price_value,
 		price_unit
-FROM t_jiri_beck_project_sql_primary_final jbp
-WHERE category_code IN (111301, 114201)
-GROUP BY YEAR(date_from), name
+	FROM t_jiri_beck_project_sql_primary_final jbp
+	WHERE category_code IN (111301, 114201)
+	GROUP BY YEAR(date_from), name
 )
 SELECT	
 	year2006.food_category,
